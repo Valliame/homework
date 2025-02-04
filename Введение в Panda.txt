@@ -1,0 +1,103 @@
+import pandas as pd
+import numpy as np
+
+# 1. Различные способы создания объектов типа Series
+print("# 1. Создание Series")
+# из списка
+series_from_list = pd.Series([10, 20, 30, 40], index=['a', 'b', 'c', 'd'])
+print("из списка:")
+print(series_from_list)
+
+# из скалярного значения
+series_from_scalar = pd.Series(5, index=['a', 'b', 'c'])
+print("\nиз скалярного значения:")
+print(series_from_scalar)
+
+# из словаря
+series_from_dict = pd.Series({'a': 1, 'b': 2, 'c': 3})
+print("\nиз словаря:")
+print(series_from_dict)
+
+# 2. Различные способы создания объектов типа DataFrame
+print("\n# 2. Создание DataFrame")
+# Создание DataFrame из объектов Series
+df_from_series = pd.DataFrame({
+    'col1': pd.Series([1, 2, 3]),
+    'col2': pd.Series([4, 5, 6])
+})
+print("из объектов Series:")
+print(df_from_series)
+
+# из списка словарей
+list_of_dicts = [{'a': 1, 'b': 2}, {'a': 3, 'b': 4, 'c': 5}]
+df_from_list_of_dicts = pd.DataFrame(list_of_dicts)
+print("\nиз списка словарей:")
+print(df_from_list_of_dicts)
+
+# из словаря объектов Series
+dict_of_series = {
+    'col1': pd.Series([1, 2, 3]),
+    'col2': pd.Series([4, 5])
+}
+df_from_dict_of_series = pd.DataFrame(dict_of_series)
+print("\nиз словаря объектов Series:")
+print(df_from_dict_of_series)
+
+# из двумерного массива NumPy
+data = np.array([[1, 2], [3, 4], [5, 6]])
+df_from_numpy = pd.DataFrame(data, columns=['col1', 'col2'])
+print("\nиз двумерного массива NumPy:")
+print(df_from_numpy)
+
+# из структурированного массива NumPy
+dtype = [('col1', 'int32'), ('col2', 'float64')]
+data = np.array([(1, 2.0), (3, 4.0), (5, 6.0)], dtype=dtype)
+df_from_struct_array = pd.DataFrame(data)
+print("\nиз структурированного массива NumPy:")
+print(df_from_struct_array)
+
+# 3. Объединение двух Series с разными индексами, замена NaN на 1
+print("\n# 3. Объединение Series с разными индексами")
+series1 = pd.Series({'a': 10, 'b': 20})
+series2 = pd.Series({'b': 30, 'c': 40})
+combined_series = series1.add(series2, fill_value=1)
+print("Результат объединения:")
+print(combined_series)
+
+# 4. Транслирование для DataFrame: вычитание по столбцам
+print("\n# 4. Транслирование для DataFrame")
+data = {
+    'A': [10, 20, 30],
+    'B': [1, 2, 3],
+    'C': [5, 10, 15]
+}
+df = pd.DataFrame(data)
+print("Исходный DataFrame:")
+print(df)
+
+df_subtracted = df.subtract(df.iloc[0], axis=1)
+print("\nРезультат вычитания по столбцам:")
+print(df_subtracted)
+
+# 5. Пример использования методов ffill() и bfill()
+print("\n# 5. Методы ffill() и bfill()")
+data = {
+    'A': [1, None, 3],
+    'B': [None, 2, None],
+    'C': [7, 8, None]
+}
+df_with_nan = pd.DataFrame(data)
+print("Исходный DataFrame с NaN:")
+print(df_with_nan)
+
+# Использование ffill 
+ffill_result = df_with_nan.ffill()
+print("\nРезультат ffill:")
+print(ffill_result)
+
+# Использование bfill
+bfill_result = df_with_nan.bfill()
+print("\nРезультат bfill:")
+print(bfill_result)
+ "nbformat_minor": 5
+}
